@@ -11,6 +11,7 @@ const router = express.Router()
 // req.body ** requires  server.use(express.json()) **
 // req.query
 
+
 router.get('/', (req, res) => {
     Adopter.find(req.query)
       .then(adopters => {
