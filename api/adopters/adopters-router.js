@@ -6,6 +6,11 @@ const router = express.Router()
 
 // this route kinds in for requests that start with /api/adopters
 
+// data from the req
+// req.params
+// req.body ** requires  server.use(express.json()) **
+// req.query
+
 router.get('/', (req, res) => {
     Adopter.find(req.query)
       .then(adopters => {
@@ -39,7 +44,14 @@ router.get('/', (req, res) => {
   router.get('/:id/dogs', async (req, res) => {
     try {
         //here
-        
+        const dogs = await Adopter.findDogs(req.params.id)
+        if (!dogs.length) {
+            res.status(404).json({
+                message: `This adopter does not have any dogs.`
+            })
+        } else {
+            res.json(dogs)
+        }
     } catch (err) {
         res.status(500).json({
             // not good for production, clients don't need to or shouldn't see what the error is.
