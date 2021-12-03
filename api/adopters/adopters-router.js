@@ -36,21 +36,19 @@ router.get('/', (req, res) => {
       });
   });
   
-  router.get('/:id/dogs', (req, res) => {
-    Adopter.findDogs(req.params.id)
-      .then(dogs => {
-        if (dogs.length > 0) {
-          res.status(200).json(dogs);
-        } else {
-          res.status(404).json({ message: 'No dogs for this adopter' });
-        }
-      })
-      .catch(error => {
-        console.log(error);
+  router.get('/:id/dogs', async (req, res) => {
+    try {
+        //here
+        
+    } catch (err) {
         res.status(500).json({
-          message: 'Error retrieving the dogs for this adopter',
-        });
-      });
+            // not good for production, clients don't need to or shouldn't see what the error is.
+            // message: err.message,
+
+            // use a custom message like this.
+            message: 'something went wrong!',
+        })
+    }
   });
   
   router.post('/', (req, res) => {
